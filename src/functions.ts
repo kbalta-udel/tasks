@@ -1,6 +1,3 @@
-import { type } from "os";
-import { text } from "stream/consumers";
-
 /**
  * Consumes a single temperature in Fahrenheit (a number) and converts to Celsius
  * using this formula:
