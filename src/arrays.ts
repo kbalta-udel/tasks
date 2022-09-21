@@ -4,8 +4,17 @@
  * an empty array. If there is one element, the resulting list should
  * the number twice.
  */
-export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+export function bookEndList(books: number[]): number[] {
+    let newArray: number[] = [];
+    if (books.length === 0) return [];
+    else if (books.length === 1) {
+        newArray = [books[0], books[0]];
+        return newArray;
+    } else {
+        newArray = [books[0], books[books.length - 1]];
+    }
+
+    return newArray;
 }
 
 /**
@@ -13,7 +22,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const tripled = numbers.map((numbers): number => numbers * 3);
+    return tripled;
 }
 
 /**
@@ -21,7 +31,9 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const newInts = numbers.map((v) => parseInt(v));
+    const final = newInts.map((x) => (isNaN(x) ? (x = 0) : x));
+    return final;
 }
 
 /**
@@ -32,7 +44,12 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    const withoutDollar = amounts.map((y) =>
+        y.includes("$") ? y.substring(1) : y
+    );
+    const newInts = withoutDollar.map((v) => parseInt(v));
+    const final = newInts.map((x) => (isNaN(x) ? (x = 0) : x));
+    return final;
 };
 
 /**
@@ -41,7 +58,15 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const shout = messages.map((y) => (y.endsWith("!") ? y.toUpperCase() : y));
+    const withoutQuestion = shout.filter(
+        (x: string): boolean => x.endsWith("?")
+        //endsWith           if true, keeps     if false, deletes
+    );
+    const final = shout.filter(function (obj) {
+        return withoutQuestion.indexOf(obj) == -1;
+    });
+    return final;
 };
 
 /**
@@ -49,7 +74,9 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    const small = words.filter((word: string): boolean => word.length < 4);
+    const final = small.length;
+    return final;
 }
 
 /**
@@ -58,7 +85,9 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    const allowed = ["red", "blue", "green"];
+    if (colors.length == 0) return true;
+    return colors.every((x) => allowed.includes(x));
 }
 
 /**
@@ -69,7 +98,12 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    if (addends.length == 0) return "0=0";
+    const addedOnly = addends.join("+");
+    const sum = addends.reduce((accumulator, value) => {
+        return accumulator + value;
+    });
+    return sum + "=" + addedOnly;
 }
 
 /**
@@ -82,5 +116,24 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    // eslint-disable-next-line prefer-spread
+    const minimum = Math.min.apply(Math, values);
+    if (values.length == 0) return [0];
+    else if (minimum < 0) {
+        const firstNegative = values.findIndex(
+            (num: number): boolean => num < 0
+        ); //                                           sum has to come after negative
+        const toBeSummed = values.slice(0, firstNegative + 1);
+        const addedToEnd = values.slice(firstNegative + 1);
+        let sum = toBeSummed.reduce((accumulator, value) => {
+            return accumulator + value;
+        });
+        sum = sum - values[firstNegative];
+        return toBeSummed.concat(sum, addedToEnd);
+    } else if (minimum > 0) {
+        const sum2 = values.reduce((accumulator, value) => {
+            return accumulator + value;
+        });
+        return values.concat(sum2);
+    } else return [0];
 }
