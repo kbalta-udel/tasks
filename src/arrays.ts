@@ -130,10 +130,10 @@ export function injectPositive(values: number[]): number[] {
         });
         sum = sum - values[firstNegative];
         return toBeSummed.concat(sum, addedToEnd);
-    } else if (minimum > 0) {
+    } else {
         const sum2 = values.reduce((accumulator, value) => {
             return accumulator + value;
         });
         return values.concat(sum2);
-    } else return [0];
+    }
 }
