@@ -1,5 +1,5 @@
-import { type } from "os";
-import { isPrivateIdentifier } from "typescript";
+//import { type } from "os";
+//import { isPrivateIdentifier } from "typescript";
 import { Question, QuestionType } from "./interfaces/question";
 
 /**
